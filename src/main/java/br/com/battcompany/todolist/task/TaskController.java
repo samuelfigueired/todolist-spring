@@ -25,11 +25,15 @@ public class TaskController {
         var idUser = request.getAttribute("idUser");
         taskModel.setIdUser((UUID)idUser);
 
-        var currentDate= LocalDateTime.now();
-        //10/11/2023 - Current
+        var currentDate = LocalDateTime.now(); // variavel que armazena em tempo real
+        // 10/11/2023 - Current
         // 10/10/2023 - CreatedAT
-        if(currentDate.isAfter(taskModel.getStartAt())){ //Verifica se o usuario preencheu uma data anterior a data atual
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("A data de ínicio deve ser maior do que a data atual!");
+        if(currentDate.isAfter(taskModel.getStartAt()) || currentDate.isAfter(taskModel.getEndAt())){ //Verifica se o usuario preencheu uma data anterior a data atual
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("A data de ínicio / data de término deve ser maior do que a data atual!");
+        }
+
+        if(taskModel.getStartAt().isAfter(taskModel.getEndAt())){ //Verifica se o usuario preencheu uma data anterior a data atual
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("A data de ínicio deve ser menor doque a data de término!");
         }
         var task = this.taskRepository.save(taskModel);
         return ResponseEntity.status(HttpStatus.OK).body(task);
