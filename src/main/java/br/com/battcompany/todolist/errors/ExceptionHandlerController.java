@@ -11,6 +11,6 @@ public class ExceptionHandlerController {
 
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public ResponseEntity<String> handleHttpMessageNotReadableException(HttpMessageNotReadableException ex) {
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMostSpecificCause().getMessage());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMostSpecificCause().getMessage()); //Try cath para mensagem de erro padrao caso usaurio cadastra uma task com title > 50 caracteres
     }
 }
