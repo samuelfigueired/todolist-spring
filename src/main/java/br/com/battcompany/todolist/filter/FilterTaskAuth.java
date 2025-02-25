@@ -25,7 +25,8 @@ public class FilterTaskAuth extends OncePerRequestFilter{
             throws ServletException, IOException {
 
                 var servletPath = request.getServletPath();                
-                if(servletPath .equals("/tasks/")){
+                System.out.println("PATH: "+servletPath);
+                if(servletPath.startsWith("/tasks/")){ //Para quando fazer o update não ficar nulo e poder mudar o path por conta do id da tarefa por conta do parametro
                     // Pegar a autenticação (usario e senha)
                     var authorization = request.getHeader("Authorization");
                     
